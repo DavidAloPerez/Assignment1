@@ -1,0 +1,100 @@
+/* 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*/
+
+/*  */
+body {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.header {
+    width: 100%;
+    background: rgb(255, 219, 110);
+    color: rgb(0, 0, 0);
+    display: flex;
+}
+
+.navbar {
+    background-color: #4a90e2; /* Color azul */
+    padding: 5px;
+    text-align: center;
+  }
+  
+.navbar-title {
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+}
+  
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2x0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+form {
+    margin-top: 40px; /* Margen superior para separar del header */
+    display: flex;
+    align-items: center; /* Alinea el input y el botón verticalmente */
+    gap: 10px; /* Espacio entre input y botón */
+    width: 100%;
+}
+  
+input {
+    width: 80%; /* Ocupa todo el espacio disponible menos el del botón */
+    padding: 10px;
+    border: 1px solid #2d2d2d;
+    margin-left: 5%;
+}
+  
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilo para el botón de eliminar */
+.delete-button {
+  background-color: #ff0000; /* Rojo claro */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: 2px solid #4f0909; /* Rojo más oscuro para el borde */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 10px;
+}
+
+.delete-button:hover {
+  background-color: #c53030; /* Rojo más oscuro al pasar el ratón */
+  transform: scale(1.05); /* Efecto de ampliación cuando se pasa el ratón */
+}
+
+.delete-button:focus {
+  outline: none; /* Quita el borde de enfoque por defecto */
+}
+
+li {
+    margin-bottom: 10px; /* Ajusta este valor según el espacio que desees */
+  }
+  
+
+
