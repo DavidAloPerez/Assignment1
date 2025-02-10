@@ -1,100 +1,148 @@
-/* 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-*/
-
-/*  */
-body {
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    font-family: sans-serif;
+/* Reset de estilos básicos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Contenedor principal que divide la pantalla en dos columnas */
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 40px;
+  display: flex;
+  height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
 }
 
-.header {
-    width: 100%;
-    background: rgb(255, 219, 110);
-    color: rgb(0, 0, 0);
-    display: flex;
-}
-
-.navbar {
-    background-color: #4a90e2; /* Color azul */
-    padding: 5px;
-    text-align: center;
-  }
-  
-.navbar-title {
-    color: white;
-    font-size: 32px;
-    font-weight: bold;
-}
-  
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2x0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-  
-form {
-    margin-top: 40px; /* Margen superior para separar del header */
-    display: flex;
-    align-items: center; /* Alinea el input y el botón verticalmente */
-    gap: 10px; /* Espacio entre input y botón */
-    width: 100%;
-}
-  
-input {
-    width: 80%; /* Ocupa todo el espacio disponible menos el del botón */
-    padding: 10px;
-    border: 1px solid #2d2d2d;
-    margin-left: 5%;
-}
-  
-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Estilo para el botón de eliminar */
-.delete-button {
-  background-color: #ff0000; /* Rojo claro */
+/* Barra lateral (izquierda) */
+.sidebar {
+  width: 20%; /* Ocupa 1/4 de la pantalla */
+  background-color: #333; /* Fondo sólido para la barra lateral */
   color: white;
-  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Alinea los elementos desde el principio */
+  padding: 20px;
+}
+
+/* Título dentro de la barra lateral con fondo degradado */
+.navbar-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px; /* Espacio debajo del título */
+  text-align: center;
+  background: linear-gradient(to right, rgb(0, 255, 0), rgb(0, 195, 255)); /* Fondo degradado */
+  -webkit-background-clip: text;
+  color: transparent; /* Hace que el texto tenga el fondo degradado */
+}
+
+/* Contenedor de los botones de navegación */
+.nav-links {
+  display: flex;
+  flex-direction: column; /* Coloca los botones en vertical */
+  gap: 15px;
+}
+
+/* Estilo para los enlaces de navegación (botones) */
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  background-color: #444; /* Fondo inicial de los botones */
   border-radius: 5px;
-  border: 2px solid #4f0909; /* Rojo más oscuro para el borde */
+  text-align: center;
+  transition: background-color 0.3s ease; /* Suaviza la transición de color */
+}
+
+/* Estilo cuando el cursor pasa por encima */
+.nav-links a:hover {
+  background-color: #28a745; /* Verde cuando se pasa el cursor */
+}
+
+
+/* Contenedor de la columna derecha (contenido principal) */
+.main-content {
+  flex-grow: 1; /* Ocupa el espacio restante */
+  padding: 20px;
+  overflow-y: auto; /* Permite desplazamiento si el contenido excede la altura */
+}
+
+/* Estilo para el contenedor del formulario de tareas */
+.task-input-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.task-input-container input {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.task-input-container button {
+  flex-shrink: 0;
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  margin-left: 10px;
+  transition: background-color 0.3s ease;
 }
 
-.delete-button:hover {
-  background-color: #c53030; /* Rojo más oscuro al pasar el ratón */
-  transform: scale(1.05); /* Efecto de ampliación cuando se pasa el ratón */
+.task-input-container button:hover {
+  background-color: #0d4d1b;
 }
 
-.delete-button:focus {
-  outline: none; /* Quita el borde de enfoque por defecto */
+/* Estilo para la lista de tareas */
+ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 li {
-    margin-bottom: 10px; /* Ajusta este valor según el espacio que desees */
-  }
-  
+  background-color: #f8f9fa;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.delete-button:hover {
+  background-color: #78000c;
+}
+
+/* Diseño de las casillas o botones de tarea */
+button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+/* Estilo para el título de la sección Tasks */
+.tasks-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px; /* Añadido espacio entre el título y el formulario */
+}
