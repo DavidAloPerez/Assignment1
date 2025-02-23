@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Reset de estilos básicos */
 * {
   margin: 0;
@@ -57,7 +61,6 @@
   background-color: #28a745; /* Verde cuando se pasa el cursor */
 }
 
-
 /* Contenedor de la columna derecha (contenido principal) */
 .main-content {
   flex-grow: 1; /* Ocupa el espacio restante */
@@ -65,19 +68,26 @@
   overflow-y: auto; /* Permite desplazamiento si el contenido excede la altura */
 }
 
-/* Estilo para el contenedor del formulario de tareas */
-.task-input-container {
+/* Contenedor principal de tareas */
+.tasks-container {
+  width: 100%; /* Ocupar toda la columna derecha */
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+/* Hacer que el formulario de ingreso de tareas ocupe toda la columna */
+.task-input-container {
+  width: 100%;
+  display: flex;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
 .task-input-container input {
   flex-grow: 1;
+  width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #2d2d2d;
   font-size: 16px;
 }
 
@@ -85,7 +95,7 @@
   flex-shrink: 0;
   background-color: #28a745;
   color: white;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
@@ -96,13 +106,18 @@
   background-color: #0d4d1b;
 }
 
-/* Estilo para la lista de tareas */
+/* Asegurar que la lista de tareas ocupe toda la columna */
+.task-list {
+  width: 100%;
+}
+
 ul {
-  list-style-type: none;
+  width: 100%;
   padding: 0;
 }
 
 li {
+  width: 100%; /* Ocupar todo el ancho disponible */
   background-color: #f8f9fa;
   padding: 10px;
   margin-bottom: 10px;
@@ -112,20 +127,27 @@ li {
   align-items: center;
 }
 
+/* Botón de eliminar */
 .delete-button {
-  background-color: #dc3545;
+  background-color: #ff0000; /* Rojo claro */
   color: white;
-  border: none;
-  padding: 5px 10px;
+  padding: 8px 16px;
   border-radius: 5px;
+  border: 2px solid #4f0909; /* Rojo más oscuro para el borde */
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 10px;
 }
 
 .delete-button:hover {
-  background-color: #78000c;
+  background-color: #c53030; /* Rojo más oscuro al pasar el ratón */
+  transform: scale(1.05); /* Efecto de ampliación cuando se pasa el ratón */
 }
 
-/* Diseño de las casillas o botones de tarea */
+.delete-button:focus {
+  outline: none; /* Quita el borde de enfoque por defecto */
+}
+
 button {
   background-color: #28a745;
   color: white;
