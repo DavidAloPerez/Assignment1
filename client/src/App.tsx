@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
 import Root from './routes/Root';
 import Dashboard from './routes/Dashboard';
 import Tasks from './routes/Tasks';
@@ -6,7 +7,7 @@ import ErrorPage from './routes/ErrorPage';
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Root />}>
           <Route index element={<Dashboard />} />
@@ -14,7 +15,7 @@ const App = () => {
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 

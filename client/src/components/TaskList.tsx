@@ -1,46 +1,64 @@
-import { useEffect, useState } from "react";
+// client/src/components/TaskList.tsx
+import { Task } from "../models/TaskModel";
 
 interface TaskListProps {
-  onDeleteTask: (task: string) => void;
+  tasks: Task[];
+  onDeleteTask: (taskId: number) => void;
 }
 
-const TaskList = ({ onDeleteTask }: TaskListProps) => {
-  const [taskList, setTaskList] = useState<string[]>([]);
-
-  useEffect(() => {
-    const getTasks = async () => {
-      try {
-        const response = await fetch("http://localhost:5001/api/tasks");
-        const data = await response.json();
-        setTaskList(data.tasks);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
-
-    getTasks();
-  }, []);
-
+const TaskList = ({ tasks, onDeleteTask }: TaskListProps) => {
   return (
-    <div className="w-full">
-      <h2 className="text-2xl font-bold mb-4">Task List</h2>
-      <ul>
-        {taskList.map((task, index) => (
-          <li
-            key={index}
-            className="bg-gray-100 p-3 mb-2 rounded flex justify-between items-center"
-          >
-            <span>{task}</span>
+    <ul className="w-full space-y-3">
+      {tasks.map((task) => (
+        <li 
+          key={task.taskId}
+          className="w-full bg-green-50 p-4 rounded-lg border border-green-100 flex justify-between items-center"
+        >
+          {/* Contenido de la tarea */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-baseline gap-2">
+              <h3 className="text-lg font-semibold text-gray-800 truncate">
+                {task.name}
+              </h3>
+              {task.content && (
+                <span className="text-gray-600 text-sm truncate">
+                  - {task.content}
+                </span>
+              )}
+            </div>
+            
+            {/* Metadatos */}
+            <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500">
+              {task.startDate && (
+                <span>Start: {new Date(task.startDate).toLocaleDateString()}</span>
+              )}
+              {task.endDate && (
+                <span>End: {new Date(task.endDate).toLocaleDateString()}</span>
+              )}
+              <span className={`font-medium ${
+                task.status === 1 ? 'text-blue-500' : 
+                task.status === 2 ? 'text-amber-500' : 
+                'text-green-600'
+              }`}>
+                {task.status === 1 ? 'New' : 
+                 task.status === 2 ? 'In Progress' : 
+                 'Completed'}
+              </span>
+            </div>
+          </div>
+          
+          {/* Botón de eliminar - posición fija a la derecha */}
+          <div className="flex-shrink-0 ml-4">
             <button
-              className="bg-red-600 border-2 border-black text-white px-4 py-2 rounded transition-transform transform hover:bg-red-800 hover:scale-105"
-              onClick={() => onDeleteTask(task)}
+              onClick={() => onDeleteTask(task.taskId)}
+              className="delete-button bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-colors"
             >
               Delete
             </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 };
 

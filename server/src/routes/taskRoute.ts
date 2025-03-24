@@ -5,5 +5,6 @@ const router = express.Router();
 
 // Define the GET route at /api/tasks
 router.get('/tasks', getTasks);
+router.post('/tasks', getTasks);
 
 export default router;
