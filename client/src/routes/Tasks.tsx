@@ -1,6 +1,8 @@
+// client/src/routes/Tasks.tsx
 import React, { useState, useEffect } from "react";
 import TaskList from "../components/TaskList";
-import { getTasks } from "../services/apiService";
+import axios from "axios";
+import { getTasks, deleteTask } from "../services/apiService";
 import { Task, TaskStatus } from "../models/TaskModel";
 import CreateTask from "../components/CreateTask";
 
@@ -8,6 +10,11 @@ const Tasks = () => {
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [notification, setNotification] = useState<{
+    show: boolean;
+    message: string;
+    type: 'success' | 'error';
+  }>({ show: false, message: '', type: 'success' });
 
   const fetchTasks = async () => {
     try {
@@ -30,19 +37,53 @@ const Tasks = () => {
     fetchTasks();
   }, []);
 
+  const showNotification = (message: string, type: 'success' | 'error' = 'success') => {
+    setNotification({ show: true, message, type });
+    setTimeout(() => {
+      setNotification({ show: false, message: '', type: 'success' });
+    }, 3000);
+  };
+
   const handleTaskCreated = (newTask: Task) => {
     setTaskList(prevTasks => [newTask, ...prevTasks]);
+    showNotification("Task created successfully", "success");
   };
 
-  const handleDeleteTask = (taskId: number) => {
-    console.log("Delete task with ID:", taskId);
+  const handleDeleteTask = async (taskId: number) => {
+    try {
+      console.log(`Frontend: Intentando eliminar tarea con ID: ${taskId}`);
+      await deleteTask(taskId);
+      setTaskList(prevTasks => prevTasks.filter(task => task.taskId !== taskId));
+      showNotification("Task deleted successfully", "success");
+    } catch (error) {
+      console.error("Error deleting task:", error);
+      showNotification("Error deleting task", "error");
+    }
   };
 
+  const handleUpdateTask = (updatedTask: Task) => {
+    setTaskList(prevTasks =>
+      prevTasks.map(task => (task.taskId === updatedTask.taskId ? updatedTask : task))
+    );
+    showNotification("Task updated successfully", "success");
+  };
+  
   if (loading) return <div className="text-center p-8"><span className="loading loading-spinner loading-lg"></span></div>;
   if (error) return <div className="alert alert-error max-w-md mx-auto mt-8">{error}</div>;
 
   return (
     <div className="main-content">
+      {/* Notificación */}
+      {notification.show && (
+        <div className={`fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+          notification.type === 'success' 
+            ? 'bg-green-100 text-green-800 border border-green-200' 
+            : 'bg-red-100 text-red-800 border border-red-200'
+        }`}>
+          {notification.message}
+        </div>
+      )}
+      
       <div className="tasks-container">
         <h1 className="tasks-title">Task Management</h1>
         
@@ -54,15 +95,12 @@ const Tasks = () => {
         
         {/* Lista de tareas */}
         <div className="task-list-section bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">Your Tasks</h2>
           {taskList.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               No tasks found. Create your first task!
             </div>
           ) : (
-            <div className="task-list">
-              <TaskList tasks={taskList} onDeleteTask={handleDeleteTask} />
-            </div>
+            <TaskList tasks={taskList} onDeleteTask={handleDeleteTask} onUpdateTask={handleUpdateTask} />
           )}
         </div>
       </div>
